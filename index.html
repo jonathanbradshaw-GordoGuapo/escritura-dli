@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>¡A escribir! · DLI 6</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#eef3f8;color:#172b45;font-family:system-ui,sans-serif;line-height:1.6}main{max-width:850px;margin:5vh auto;padding:24px}header small{font-weight:700;color:#446580;letter-spacing:2px}h1{font-size:clamp(36px,7vw,58px);margin:8px 0}header p{margin:0 0 25px}.card{background:white;border-radius:20px;padding:clamp(22px,5vw,40px);box-shadow:0 12px 40px #172b4510;border-top:6px solid #008575}h2{font-size:28px;margin:8px 0 16px}#prompt{font-size:21px;white-space:pre-line}.buttons{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}button{font:inherit;font-weight:700;padding:13px 22px;border-radius:10px;border:0;cursor:pointer;background:#007f71;color:white}button.secondary{background:#e7eef6;color:#172b45}button:disabled{opacity:.45;cursor:default}button:focus-visible{outline:3px solid #e6a400;outline-offset:4px}.tips{margin-top:24px;padding:20px;background:#e2edf6;border-radius:14px}.tips p{margin:5px 0}#status{min-height:26px;font-size:15px}footer{font-size:13px;color:#52657a;margin-top:25px}
+</style>
+<main><header><small>ESPAÑOL · DLI 6</small><h1>¡A escribir!</h1><p>Obtén un tema, copia la pregunta y escribe tu respuesta en Classkick.</p></header>
+<section class="card" aria-label="Pregunta de escritura"><div id="number">30 temas para explorar</div><div aria-live="polite"><h2 id="title">¿Sobre qué vas a escribir?</h2><p id="prompt">Haz clic en el botón para recibir una pregunta.</p></div><div class="buttons"><button id="generate">Generar una pregunta</button><button class="secondary" id="copy" disabled>Copiar pregunta</button></div><p id="status" role="status"></p></section>
+<section class="tips"><strong>Antes de terminar…</strong><p>✓ Responde a todas las partes de la pregunta.</p><p>✓ Incluye detalles, ejemplos y razones.</p><p>✓ Conecta tus ideas y usa oraciones completas.</p><p>✓ Relee tu respuesta para comprobar que se entiende.</p><p>Si no tienes una experiencia relacionada con el tema, puedes imaginar una.</p></section><footer>Preguntas originales de práctica. No son preguntas oficiales de STAMP. Tu tema se guarda en este navegador cuando es posible. Escribe tu respuesta en Classkick.</footer></main>
+<script>
+const prompts = [
+['Así soy yo','Un estudiante nuevo quiere conocerte. Describe tu personalidad, tus intereses y algo que haces bien. Explica qué actividad podrían hacer juntos y por qué.'],
+['Un día en mi vida','Describe un día normal desde que te levantas hasta que te acuestas. Explica qué parte del día disfrutas más y cuál te gustaría cambiar. Da razones.'],
+['Mi lugar favorito','Describe un lugar donde te gusta pasar tiempo. Explica qué haces allí, con quién vas y por qué es especial para ti. Incluye detalles para que el lector pueda imaginarlo.'],
+['Una persona que admiro','Describe a una persona real o a un personaje que admiras. Explica qué cualidades tiene y da un ejemplo de cómo demuestra esas cualidades. ¿Qué te gustaría aprender de esa persona?'],
+['Un objeto especial','Describe un objeto que tiene mucho valor para ti, aunque no cueste mucho dinero. Explica cómo lo conseguiste, para qué lo usas y por qué es importante.'],
+['Algo que me encanta hacer','Describe una actividad que disfrutas. Explica cómo se hace, qué necesitas y por qué te gusta. ¿Qué consejo le darías a alguien que quiere intentarla por primera vez?'],
+['Bienvenido a nuestra escuela','Escribe un mensaje para un estudiante que llegará a tu escuela. Describe cómo es la escuela y explica qué necesita saber para tener un buen primer día. Incluye consejos sobre las clases y cómo conocer a otros estudiantes.'],
+['Una comida que recomiendo','Describe una comida que te gusta. Explica cómo es, cuándo la comes y qué la hace especial. Convéncele a alguien de probarla usando detalles específicos.'],
+['Un día inolvidable','Cuenta lo que pasó en un día que recuerdas muy bien. Explica dónde estabas, quién estaba contigo y qué ocurrió. ¿Por qué todavía recuerdas ese día?'],
+['Un problema que resolví','Cuenta una ocasión en la que tuviste un problema. Explica qué pasó, qué hiciste para solucionarlo y cómo terminó la situación. ¿Qué aprendiste?'],
+['Aprender algo difícil','Cuenta cómo aprendiste a hacer algo que al principio te costaba. Explica qué dificultades tuviste, cómo practicaste y qué te ayudó a mejorar. ¿Cómo te sentiste al lograrlo?'],
+['Un cambio de planes','Cuenta una ocasión en la que tus planes cambiaron inesperadamente. Explica cuál era el plan original, qué lo cambió y qué hiciste después. ¿El cambio terminó siendo positivo o negativo? Explica.'],
+['Un trabajo en equipo','Cuenta una experiencia en la que trabajaste con otras personas. Explica qué querían lograr, qué hiciste tú y qué fue fácil o difícil. ¿Qué harías diferente la próxima vez?'],
+['Un error que me enseñó algo','Cuenta una ocasión en la que cometiste un error. Explica qué pasó, cómo reaccionaste y qué hiciste después. ¿Cómo te ayudó esa experiencia a tomar mejores decisiones?'],
+['Una sorpresa','Cuenta una ocasión en la que algo te sorprendió. Explica qué esperabas que pasara y qué ocurrió realmente. Describe tu reacción y la de las otras personas.'],
+['Cuando ayudé a alguien','Cuenta una ocasión en la que ayudaste a otra persona. Explica qué necesitaba, cómo la ayudaste y qué pasó después. ¿Cómo te sentiste y por qué?'],
+['Aprender solo o con otros','Compara estudiar solo con estudiar en grupo. Explica una ventaja y una dificultad de cada opción. ¿Cuál prefieres y en qué situaciones? Incluye un ejemplo.'],
+['Dentro o fuera de casa','Compara una actividad que haces dentro de casa con una que haces al aire libre. Explica qué disfrutas de cada una. ¿Cuál recomendarías para pasar una tarde con amigos y por qué?'],
+['Dos formas de disfrutar una historia','Compara leer una historia con verla en una película o serie. Explica qué ofrece cada opción y cuál prefieres. Usa una historia que conozcas como ejemplo, si puedes.'],
+['¿Más tiempo de recreo?','Tu escuela está considerando dar más tiempo de recreo, pero eso dejaría menos tiempo para otras actividades. Explica si apoyas la idea. Describe los beneficios, una posible dificultad y cómo se podría resolver.'],
+['El uso de dispositivos','¿Cuándo ayudan los dispositivos electrónicos a los estudiantes y cuándo los distraen? Explica ambas situaciones con ejemplos. Propón una regla para usarlos en clase y explica por qué sería útil.'],
+['Una buena amistad','¿Qué cualidades hacen que alguien sea un buen amigo? Explica cuáles son las más importantes para ti y cómo se demuestran con acciones. Incluye un ejemplo real o imaginario.'],
+['Una actividad para nuestra clase','Tu clase puede elegir una actividad especial. Propón una actividad y explica qué harían los estudiantes, qué aprenderían y por qué la disfrutarían. Explica cómo podrían participar personas con diferentes intereses.'],
+['Una mejora para la escuela','Si pudieras cambiar una cosa de tu escuela, ¿qué cambiarías? Describe cómo es ahora y cómo sería después del cambio. Explica a quién ayudaría y qué se necesitaría para hacerlo realidad.'],
+['Una meta personal','Describe algo que quieres lograr durante este año. Explica por qué te importa y qué pasos vas a seguir. ¿Qué dificultad podrías encontrar y cómo intentarías superarla?'],
+['El día perfecto','Imagina que puedes planear un día especial. Describe qué harías por la mañana, por la tarde y por la noche. Explica con quién pasarías el día y por qué elegiste esas actividades.'],
+['Recibir a un visitante','Una persona de otro lugar va a visitar tu comunidad. Planea un día para mostrarle lugares y actividades interesantes. Explica adónde irían, qué harían y por qué elegiste cada actividad.'],
+['Un club nuevo','Puedes crear un club para estudiantes de tu escuela. Describe su propósito, quiénes podrían participar y qué harían durante las reuniones. Explica cómo animarías a otros estudiantes a unirse.'],
+['Una celebración con un presupuesto limitado','Estás organizando una celebración para tu grupo, pero tienes poco dinero. Explica qué actividades, comida y materiales elegirías. Describe cómo harías que la celebración fuera divertida sin gastar mucho.'],
+['Un plan que necesita una solución','Tu grupo planeó una actividad al aire libre, pero empieza a llover. Describe el plan original y propón una alternativa. Explica cómo organizarías al grupo y qué harías si algunas personas no estuvieran de acuerdo.']
+];
+const key='escritura-dli-prompt-v1';let current=null;
+const el=id=>document.getElementById(id);
+function show(i){current=i;el('number').textContent='Tema '+(i+1)+' de '+prompts.length;el('title').textContent=prompts[i][0];el('prompt').textContent=prompts[i][1];el('copy').disabled=false;el('generate').textContent='Generar otra pregunta';el('status').textContent='';try{localStorage.setItem(key,String(i))}catch{}}
+try{const saved=localStorage.getItem(key);if(saved!==null&&/^\d+$/.test(saved)&&Number(saved)<prompts.length)show(Number(saved))}catch{}
+el('generate').onclick=()=>{const options=prompts.map((_,i)=>i).filter(i=>i!==current);show(options[Math.floor(Math.random()*options.length)])};
+el('copy').onclick=async()=>{if(current===null)return;const text='Tema '+(current+1)+': '+prompts[current][0]+'\n\n'+prompts[current][1];try{await navigator.clipboard.writeText(text);el('status').textContent='¡Pregunta copiada! Pégala en Classkick.'}catch{el('status').textContent='Selecciona el título y la pregunta y usa Ctrl+C (o ⌘C) para copiarlos.'}};
+</script></html>
